@@ -52,7 +52,7 @@ function plotHeatmapforInferredRateandFraction(inferredRatePath, figSavingDir)
 	ylabel('Methy Fraction');
 	title(strcat('Rate vs Fraction, Correlation: ', num2str(round(CC(2,1), 2))));
 	figPath = strcat(figSavingDir, "Heatmap_For_Inferred_Rate_and_Fraction.eps");
-	print(figPath, '-depsc');
+	print(figPath, '-depsc', '-r300');
 	close all
 end
 

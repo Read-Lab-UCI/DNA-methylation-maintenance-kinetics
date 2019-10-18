@@ -20,11 +20,11 @@ function fig4HistofRateandMethyFraction(inferredRatePath, figSavingDir)
 
 	%Plot param configuration
 	
-	fontSize = 20;%font size of figure
+	fontSize = 20; %font size of figure
 
 	%histogram of fitted methylation rates
 	figure(1)
-	h1 = histogram(log10(Rates), 'Normalization', 'probability', 'BinWidth', 0.15)
+	h1 = histogram(log10(Rates), 'Normalization', 'probability', 'BinWidth', 0.15);
 	set(gca, 'FontSize', fontSize)
 	xlim([-2.2 1.5])
 	xlabel('log10 Rate Constant k (hr^{-1})')
@@ -35,13 +35,13 @@ function fig4HistofRateandMethyFraction(inferredRatePath, figSavingDir)
 
 	%histogram of fitted steady state methylation fractions
 	figure(2)
-	h2 = histogram(Fracs, 'Normalization', 'probability', 'BinWidth', 0.05)
+	h2 = histogram(Fracs, 'Normalization', 'probability', 'BinWidth', 0.05);
 	set(gca, 'FontSize', fontSize)
 	title('Distribution of Fitted Fraction Methylation')
 	xlabel('Fraction of Cells with Methylation/per Site (f)')
 	ylabel('Probability')
 	fig2Path = strcat(figSavingDir, "Fig4b_methyfraction_histogram.eps");
-	print(fig2Path, '-depsc')
+	print(fig2Path, '-depsc', '-r300')
 	close all
 end
 
