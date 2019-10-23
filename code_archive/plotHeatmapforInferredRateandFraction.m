@@ -31,7 +31,7 @@ function plotHeatmapforInferredRateandFraction(inferredRatePath, figSavingDir)
     end
 
 
-	heatmapDataArray=heatmapDataArray/numel(fittedSites);
+	heatmapDataArray=heatmapDataArray'/numel(fittedSites);
 	
 	CC = corrcoef(Rates, Fracs) % Correlation coefficient between methylation rates and methylation fraction
 	logRateGrid = log10(rateGrid);
