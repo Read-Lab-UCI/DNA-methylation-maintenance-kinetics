@@ -18,7 +18,7 @@ function plotConfidenceIntervalHistogram(inferredRatePath, figSavingDir)
 	Rates = inferedRates(:, 1);
 	Fracs = inferredMethyFrac(:, 1);
 
-	rateCIs = inferedRates(:, 3) - inferedRates(:, 2) ; % The CIs for rates
+	rateCIs = (inferedRates(:, 3) - inferedRates(:, 2)) ./  Rates; % The CIs for rates
 	fracCIs = inferredMethyFrac(:, 3) - inferredMethyFrac(:, 2) ; % The CIs for methylaiton fractions
 
 	%CI histogram of fitted methylation rates
@@ -43,31 +43,28 @@ function plotConfidenceIntervalHistogram(inferredRatePath, figSavingDir)
 	set(gcf,'PaperUnits','inches','PaperPosition',[0 0 10 6])
 	set(gca, 'FontSize', fontSize);
 	nbins = 20;
-
 	maxP1 = 0.7; % max probability of histogram
 	subplot(2, 4, 1);
-	histogram(log10(rateCIs(find(Rates > 0.0))), nbins, 'Normalization', 'probability');
-	xlim([-2, 1.1]);
+	histogram(rateCIs(find(Rates > 0.0)), nbins, 'Normalization', 'probability');
 	ylabel('Probability');
+	xlim([0, 100]);
 	ylim([0, maxP1]);
 	title('CI of All Rates');
 	
 	subplot(2, 4, 2);
-	histogram(log10(slowRateCIs), nbins, 'Normalization', 'probability');
-	xlim([-2, 1.1]);
+	histogram(slowRateCIs, nbins, 'Normalization', 'probability');
 	ylim([0, maxP1]);
+	xlim([0, 100]);
 	xlabel('CI of Kinetic Rates');
 	title('CI of Slow Rates');
 
 	subplot(2, 4, 3);
-	histogram(log10(midiumRateCIs), nbins, 'Normalization', 'probability');
-	xlim([-2, 1.1]);
+	histogram(midiumRateCIs, nbins, 'Normalization', 'probability');
 	ylim([0, maxP1]);
 	title('CI of Midium Rates');
 	
 	subplot(2, 4, 4);
-	histogram(log10(fastRateCIs), nbins, 'Normalization', 'probability');
-	xlim([-2, 1.1]);
+	histogram(fastRateCIs, nbins, 'Normalization', 'probability');
 	ylim([0, maxP1]);
 	title('CI of Fast Rates');
 
