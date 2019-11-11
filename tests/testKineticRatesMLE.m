@@ -1,4 +1,4 @@
 cd ../scripts
-inputReadDataPath = '../data/ReadData/AllDat_Chr1WT.mat';
-inferredRateSavingPath = '../data/InferedRates/kineticRateChr1.mat';
-[Sites, inferedRates, inferredMethyFrac] = kineticRatesMLE(inputReadDataPath,inferredRateSavingPath)
+inputReadDataPath = '../data/ReadData/AllDat_Chr10WT.mat';
+inferredRateSavingPath = '../data/InferedRates/kineticRateChr10.mat';
+[Sites, inferedRates, inferredMethyFrac] = kineticRatesMLE(inputReadDataPath,inferredRateSavingPath);

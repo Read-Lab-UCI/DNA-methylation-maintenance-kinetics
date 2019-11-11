@@ -21,9 +21,12 @@ function plotConfidenceIntervalHistogram(inferredRatePath, figSavingDir, maxRate
 
 	rateCIs = (inferedRates(:, 3) - inferedRates(:, 2)) ./ Rates; % The CIs for rates
 	fracCIs = inferredMethyFrac(:, 3) - inferredMethyFrac(:, 2); % The CIs for methylaiton fractions
+	allIndexs = find((Rates > 0.0) & (rateCIs < maxRateCI)   & (fracCIs < maxFracCI));
 
-	allRateCIs = rateCIs(find((Rates > 0.0) & (rateCIs < maxRateCI)   & (fracCIs < maxFracCI)));
-	allFracCIs = fracCIs(find((Rates > 0.0)  & (rateCIs < maxRateCI)   & (fracCIs < maxFracCI)));
+	allRates = Rates(allIndexs);
+	allFracs = Fracs(allIndexs);
+	allRateCIs = rateCIs(allIndexs);
+	allFracCIs = fracCIs(allIndexs);
 
 	%CI histogram of fitted methylation rates
 	slowRateThreshold = prctile(Rates, 33.3); % the slow kinetic rate(k): if k < 33.3 percentile
@@ -31,13 +34,19 @@ function plotConfidenceIntervalHistogram(inferredRatePath, figSavingDir, maxRate
 
 	slowIndexs = find((Rates > 0.0) & (Rates <= slowRateThreshold  )  & (rateCIs < maxRateCI)   & (fracCIs < maxFracCI)); % the indexs of slow rates
 	slowRateCIs = rateCIs(slowIndexs); % the rates CIs of slow rates
+	slowRates = Rates(slowIndexs);
+	slowFracs = Fracs(slowIndexs);
 	slowFracionCIs = fracCIs(slowIndexs) ; % the methylation fractions CIs of slow rates
 	
 	midiumIndexs = find((Rates > slowRateThreshold) & (Rates < fastRateThreshold )  & (rateCIs < maxRateCI)   & (fracCIs < maxFracCI));
+	midiumRates = Rates(midiumIndexs);
+	midiumFracs = Fracs(midiumIndexs);
 	midiumRateCIs = rateCIs(midiumIndexs); 
 	midiumFracionCIs = fracCIs(midiumIndexs) ;
 
 	fastIndexs = find((Rates >= fastRateThreshold)  & (rateCIs < maxRateCI)   & (fracCIs < maxFracCI));
+	fastRates = Rates(fastIndexs);
+	fastFracs = Fracs(fastIndexs);
 	fastRateCIs = rateCIs(fastIndexs);
 	fastFracionCIs = fracCIs(fastIndexs);
 
@@ -47,12 +56,12 @@ function plotConfidenceIntervalHistogram(inferredRatePath, figSavingDir, maxRate
 	set(gcf,'PaperUnits','inches','PaperPosition',[0 0 10 6])
 	set(gca, 'FontSize', fontSize);
 	nbins = 20;
-	nrow = 3;
+	nrow = 5;
 	ncol = 4;
-	plotCIHistandHeatmap(allRateCIs, allFracCIs, nrow, ncol, 1, nbins, 'All Rates');
-	plotCIHistandHeatmap(slowRateCIs, slowFracionCIs, nrow, ncol, 2, nbins, 'Slow Rates');
-	plotCIHistandHeatmap(midiumRateCIs, midiumFracionCIs, nrow, ncol, 3, nbins, 'Midium Rates');
-	plotCIHistandHeatmap(fastRateCIs, fastFracionCIs, nrow, ncol, 4, nbins, 'Fast Rates');
+	plotCIHistandHeatmap(allRateCIs, allFracCIs, allRates, allFracs, nrow, ncol, 1, nbins, 'All Rates');
+	plotCIHistandHeatmap(slowRateCIs, slowFracionCIs, slowRates, slowFracs, nrow, ncol, 2, nbins, 'Slow Rates');
+	plotCIHistandHeatmap(midiumRateCIs, midiumFracionCIs, midiumRates, midiumFracs, nrow, ncol, 3, nbins, 'Midium Rates');
+	plotCIHistandHeatmap(fastRateCIs, fastFracionCIs, fastRates, fastFracs, nrow, ncol, 4, nbins, 'Fast Rates');
 
 	fig1Path = strcat(figSavingDir, "ConfidenceIntervalHistogram.png");
 	print(fig1Path, '-dpng', '-r300')

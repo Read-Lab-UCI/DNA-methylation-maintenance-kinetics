@@ -1,4 +1,4 @@
-function plotCIHistandHeatmap(RateCIs, FracCIs, nrow, ncol, colID, nbins, dataName)
+function plotCIHistandHeatmap(RateCIs, FracCIs, Rates, Fracs, nrow, ncol, colID, nbins, dataName)
 %plotCIHistandHeatmap - Plot the histogram of the confidence interval (CI) of methylation rates and fraction and the 2d heatmap rate CIs vs Frac CIs
 %
 % Inputs:
@@ -9,22 +9,38 @@ function plotCIHistandHeatmap(RateCIs, FracCIs, nrow, ncol, colID, nbins, dataNa
 %	 colID - The column index for this data to plot
 %	 nbins - The number of bins for histogram
 %	 dataName - The name of input data
-	
+
 	subplot(nrow, ncol, colID);
+	histogram(log10(Rates), nbins, 'Normalization', 'probability');
+	ylabel('Probability');
+	xlim([-2, 1]);
+	ylim([0, 0.25]);
+	title(strcat('Rates: ',dataName));
+
+	subplot(nrow, ncol,  1 * ncol +  colID);
+	histogram(Fracs, nbins, 'Normalization', 'probability');
+	ylabel('Probability');
+	xlim([0, 1]);
+	ylim([0, 0.25]);
+	title(strcat('Frac: ',dataName));
+
+
+	
+	subplot(nrow, ncol, 2 * ncol + colID);
 	histogram(RateCIs, nbins, 'Normalization', 'probability');
 	ylabel('Probability');
 	% xlim([0, 10]);
 	ylim([0, 0.7]);
 	title(strcat('(RCI/Rate): ',dataName));
 
-	subplot(nrow, ncol, 1 * ncol + colID);
+	subplot(nrow, ncol, 3 * ncol + colID);
 	histogram(FracCIs, nbins, 'Normalization', 'probability');
 	ylabel('Probability');
 	xlim([0, 1]);
 	ylim([0, 0.25]);
 	title(strcat('CI of Frac: ',dataName));
 
-	subplot(nrow, ncol, 2 * ncol +colID);
+	subplot(nrow, ncol, 4 * ncol +colID);
 
 	rateCIGrid = 10.^(-1: .1 : 3); % grid of the CI for rate-values
     methyFracCIGrid = 0: .1 : 1.0; %grid of the CI of f-values
