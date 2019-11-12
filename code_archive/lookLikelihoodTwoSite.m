@@ -79,9 +79,9 @@ function [] = lookLikelihoodTwoSite()
         yvals=[0 1.2 * max(NormFrac)];
         xvals=repmat(MLEFrac(2:3),numel(yvals),1);
         plot(xvals(:,1),yvals,'-.r','LineWidth',1.5)
-    if xvals(1,2)<fracgrid(end)
-        plot(xvals(:,2),yvals,'-.r','LineWidth',1.5)
-    end
+        if xvals(1,2)<fracgrid(end)
+            plot(xvals(:,2),yvals,'-.r','LineWidth',1.5)
+        end
         if loopind==numel(Listinds)
              xlabel('Methylation Fraction (f)')
         end

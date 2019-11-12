@@ -60,4 +60,3 @@ end
 save(inferredRateSavingPath, 'fittedSites', 'inferedRates', 'inferredMethyFrac')
 toc
 end
-
