@@ -3,10 +3,10 @@ This is a code repository for Busto-Moner, et al., BioRxiv 2019, which studies t
 
 ### Files Description
 
-##### MLEInference.m
+#### MLEInference.m
 The matlab code for parameter inference in this paper.
 
-##### data
+#### data
 ----ReadData: The input read data for kinetic rate inference in matlab format, which contains 2 variables: 
         
         sites: NSites x 1 integeters which represent the loci on the chromosome; 
@@ -28,5 +28,5 @@ The matlab code for parameter inference in this paper.
 		11th: NumRead_t0, the number of reads at 0h for the data in Charlton and J., Downing et al, 2018.
 		12th: NumRead_later, the sum of read number for 1h, 4h and 16h.
 
-##### methylation-kinetic-simulation
+#### methylation-kinetic-simulation
 The models and input data for methylation kinetic simulation in this paper, i.e. distributive, processive, collaborative models.
