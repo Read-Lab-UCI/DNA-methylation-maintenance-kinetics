@@ -1,5 +1,5 @@
 # DNA-methylation-maintenance-kinetics
-This is a code repository for Busto-Moner, et al., BioRxiv 2019, which studies the DNA methylation maintenance by statistical analysis and stochastic modeling
+This is a code repository for Busto-Moner, et al., BioRxiv 2019, which studies the DNA methylation maintenance by statistical analysis and stochastic modeling.
 
 ### Files Description
 
@@ -25,8 +25,8 @@ The matlab code for parameter inference in this paper.
 		8th: MLE_frac, the estimated steady state methylation fraction
 		9th: LB_CI_frac, the lower bound of the confident interval for the estimated methylation fraction
 		10th: UB_CI_frac, the upper bound of the confident interval for the estimated methylation fraction
-		11: NumRead_t0, the number of reads at 0h for the data in Charlton and J., Downing et al, 2018.
-		12: NumRead_later, the sum of read number for 1h, 4h and 16h.
+		11th: NumRead_t0, the number of reads at 0h for the data in Charlton and J., Downing et al, 2018.
+		12th: NumRead_later, the sum of read number for 1h, 4h and 16h.
 
 ##### methylation-kinetic-simulation
 The models and input data for methylation kinetic simulation in this paper, i.e. distributive, processive, collaborative models.
