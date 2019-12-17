@@ -1,18 +1,18 @@
 # DNA-methylation-maintenance-kinetics
 This is a code repository for Busto-Moner, et al., BioRxiv 2019, which studies the DNA methylation maintenance by statistical analysis and stochastic modeling.
 
-### Files Description
+## Files Description
 
 #### MLEInference.m
 The matlab code for parameter inference in this paper.
 
 #### data
-----ReadData: The input read data for kinetic rate inference in matlab format, which contains 2 variables: 
+ReadData: The input read data for kinetic rate inference in matlab format, which contains 2 variables: 
         
         sites: NSites x 1 integeters which represent the loci on the chromosome; 
         AllDat: this is an array of size (NSites, NTimepoints, 2). AllDat(i, j, 1) is the number of methylated reads at site i at timepoint j. AllDat(i, j, 2) is the number of unmethylated reads at site i at timepoint j.
     
-----MLE_data: The estimated parameters in tab separated text(BED format). Each file has the following fields:
+MLE_data: The estimated parameters in tab separated text(BED format). Each file has the following fields:
 
 		column number: content, meaning
 		1st: chromosome, the name of the chromosome
