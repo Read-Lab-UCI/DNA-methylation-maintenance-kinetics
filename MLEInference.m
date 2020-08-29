@@ -1,12 +1,21 @@
-clear all
-ChrNum = 22;
-for chromosome = 1: ChrNum
-    inputReadDataPath = sprintf('../data/ReadData/AllDat_Chr%dWT.mat', chromosome);
-    inferredRateSavingPath = sprintf('../data/InferedRates/kineticRateChr%d.mat', chromosome);
-    [fittedSites, inferedRates, inferredMethyFrac, AllDat] = kineticRatesMLE(inputReadDataPath,inferredRateSavingPath);
+function [] = MLEInference(AllDatDir, RatesDir, StartChr, EndChr)
+    clc;
+    close all;
+    if ~exist(RatesDir, 'dir')
+       mkdir(RatesDir)
+    end
+
+    EnoughReads0=10; %number of reads required at t=0
+    EnoughReadsLater=5; %number of reads required for later timepoints
+    
+    for chromosome = StartChr : EndChr
+        inputReadDataPath = strcat(AllDatDir,'/AllDat_chr',int2str(chromosome),'.mat'); % file path of read data
+        inferredRateSavingPath = strcat(RatesDir, '/Rates_chr',int2str(chromosome),'.mat');
+        [fittedSites, inferedRates, inferredMethyFrac, AllDat] = kineticRatesMLE(inputReadDataPath,inferredRateSavingPath, EnoughReads0, EnoughReadsLater);
+    end
 end
 
-function [fittedSites, inferedRates, inferredMethyFrac, AllDat] = kineticRatesMLE(inputReadDataPath,inferredRateSavingPath)
+function [fittedSites, inferedRates, inferredMethyFrac, AllDat] = kineticRatesMLE(inputReadDataPath,inferredRateSavingPath, EnoughReads0, EnoughReadsLater)
 % kineticRatesMLE - Maximum likelihood estimation (MLE) for site-specific
 % kinetic rates of DNA methylation maintenance.
 % 
@@ -45,7 +54,12 @@ load(inputReadDataPath, 'AllDat', 'sites');
 
 tShift = 0.5;
 timePoints = [0, 1, 4, 16] + tShift;
-numSites = numel(sites);
+
+Reads=sum(AllDat(:,:,1:2),3);
+NumReads0=Reads(:,1);
+NumReadsLater=sum(Reads(:,2:end),2);
+KeepSites=find(NumReadsLater>=EnoughReadsLater & NumReads0>=EnoughReads0);
+numSites=numel(KeepSites);
 
 methyFracGrid = 0 : 0.01 : 1;    %grid of f-values at which LogLikelihood will be computed
 rateGrid = 10.^(-2 : .01 : 1);   %grid of rate-values (denoted as k hereafter)
@@ -62,16 +76,20 @@ inferedRates = zeros(numSites, 4); %The inferred kinetic rates with upper, lower
 %identifiable, but lower CI95 bound is not. Reported upper CI95 is a lower-bound estimate 
 
 inferredMethyFrac = zeros(numSites, 3); %The inferred steady state methylation fraction with upper and lower confidence intervals(CIs), N by 3 matrix
-fittedSites = sites;
-
+fittedSites = sites(KeepSites)';
+AllDat = AllDat(KeepSites, : , :);
+% siteidx = find(fittedSites == 91267)
+% fittedSites = fittedSites(siteidx);
 tic
 
 %loop over the sites for rate and steady state methylation level MLE
-for ii = 1 : numSites  %par
+parfor ii = 1 : numSites  %parfor
     %get the read data for site ii
     methylatedReadTimeCourseForSiteii = AllDat(ii, : , 1);
     unmethylatedReadTimeCourseForSiteii = AllDat(ii, : , 2);
     [inferedRates(ii, : ), inferredMethyFrac(ii, : ), LogLikelihood] = siteMLE(rateGrid, methyFracGrid, timePoints, methylatedReadTimeCourseForSiteii, unmethylatedReadTimeCourseForSiteii);
+%     inferedRates(ii, : )
+%     inferredMethyFrac(ii, : )
 end
 save(inferredRateSavingPath, 'fittedSites', 'inferedRates', 'inferredMethyFrac')
 toc
