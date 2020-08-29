@@ -1,7 +1,7 @@
-# DNA-methylation-maintenance-kinetics
-
 ### !! IMPORTANT UPDATE
 We corrected a data issue caused by site indexing problem in the MLEInference code. If you downloaded the data before **August 29, 2020**, please re-download the code and data for the corrected version.
+
+# DNA-methylation-maintenance-kinetics
 
 ## Abstract
 This is a code repository for [Busto-Moner, et al., BioRxiv 2019](https://doi.org/10.1101/677013), which studies the DNA methylation maintenance by statistical analysis and stochastic modeling.
