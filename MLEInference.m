@@ -65,21 +65,11 @@ methyFracGrid = 0 : 0.01 : 1;    %grid of f-values at which LogLikelihood will b
 rateGrid = 10.^(-2 : .01 : 1);   %grid of rate-values (denoted as k hereafter)
 
 %initialize various arrays
-inferedRates = zeros(numSites, 4); %The inferred kinetic rates with upper, lower confidence intervals(CIs) and Edge Flag, N by 4 matrix
-
-%The Edge Flag(4th field) is defined as follows:
-%-1: sites where k is undefined, set k=0 (generally because no methylated reads-->f=0)
-%0: normal sites - k and full CI95 are identifiable
-%1: sites on edge: only lower bound of k is identifiable.
-%Reported k is an estimate of lower bound, corresponding to lower CI75
-%2: sites where maxLL is not on boundary, but CI95 is. So k is
-%identifiable, but lower CI95 bound is not. Reported upper CI95 is a lower-bound estimate 
+inferedRates = zeros(numSites, 3); %The inferred kinetic rates with upper, lower confidence intervals(CIs), N by 3 matrix
 
 inferredMethyFrac = zeros(numSites, 3); %The inferred steady state methylation fraction with upper and lower confidence intervals(CIs), N by 3 matrix
 fittedSites = sites(KeepSites)';
 AllDat = AllDat(KeepSites, : , :);
-% siteidx = find(fittedSites == 91267)
-% fittedSites = fittedSites(siteidx);
 tic
 
 %loop over the sites for rate and steady state methylation level MLE
