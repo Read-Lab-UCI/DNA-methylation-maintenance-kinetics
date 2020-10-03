@@ -107,7 +107,7 @@ function [inferedRateAndCIs, inferredMethyFracAndCIs, LogLikelihood] = siteMLE(r
 % Outputs:
 %    inferedRateAndCIs - inferred kinetic rates and its confidence interval
 %    inferredMethyFracAndCIs - inferred methylation fraction and its confidence interval
-%	 LogLikelihood - the likelihood surface
+%    LogLikelihood - the likelihood surface
 % Example: 
 %    [inferedRateAndCIs, inferredMethyFracAndCIs] = siteMLE(10.^(-2: .01: 1), 0: 0.01: 1, [0.5, 1.5, 4.5, 16.5], [7, 0, 2, 3], [1, 0, 5, 6])
     
@@ -119,10 +119,10 @@ function [inferedRateAndCIs, inferredMethyFracAndCIs, LogLikelihood] = siteMLE(r
     PrcValEdge=0.000157; %1th
 
     maxRate = max(rateGrid);
-	minRate = min(rateGrid);
-	
-	logMinRate = log10(maxRate);
-	logMaxRate = log10(maxRate);
+    minRate = min(rateGrid);
+    
+    logMinRate = log10(maxRate);
+    logMaxRate = log10(maxRate);
 
     %Find the edge confidence intervals
     [RawRate,RawFrac,CIRate95,CIfrac95,MaxLL]= getCI(rateGrid, methyFracGrid, LogLikelihood, PrcVal95);
@@ -242,14 +242,14 @@ function [RawRate, RawFrac, CIRate, CIFrac, MaxLL] = getCI(rateGrid, methyFracGr
 % Inputs:
 %    rateGrid - the rate grid to calculate likelihood, 1 x n1 double vector
 %    methyFracGrid - the methylation fraction grid to calculate likelihood, 1 x n2 double vector
-%	 logLikelihood -  the likelihood surface
-%	 prcVal - the percentile value of chi-squared distribution with 1 free param
+%    logLikelihood -  the likelihood surface
+%    prcVal - the percentile value of chi-squared distribution with 1 free param
 % Outputs:
 %    RawRate - the raw max likelihood parameters of rate
 %    RawFrac - the raw max likelihood parameters of methylation fraction
-%	 CIRate - confidence intervals of rate of remethylation and logLikelihood
-%	 CIFrac - confidence intervals of methylation fraction
-%	 MaxLL - the max value of logLikelihood
+%    CIRate - confidence intervals of rate of remethylation and logLikelihood
+%    CIFrac - confidence intervals of methylation fraction
+%    MaxLL - the max value of logLikelihood
 
     %find the parameter values that maximize the logLikelihood
     szL=size(logLikelihood);
@@ -275,4 +275,3 @@ function [RawRate, RawFrac, CIRate, CIFrac, MaxLL] = getCI(rateGrid, methyFracGr
     CIRate=[RateRegion(1) RateRegion(end) ProfileRate(InnerInds(1)) ProfileRate(InnerInds(end))];
     CIFrac=[FracRegion(1) FracRegion(end)];
 end
-
