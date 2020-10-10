@@ -1,5 +1,5 @@
-### !! IMPORTANT UPDATE
-We corrected a data issue on this repo caused by site indexing problem in the MLEInference code. If you downloaded the data before **August 29, 2020**, please re-download the code and data for the corrected version. (Please note that this bug did not affect any results in the accompanying article. The bug was introduced, and then fixed, after the article was submitted for publication). 
+### !! UPDATE
+We corrected a data issue on this repo caused by site indexing problem in the MLEInference code. If you downloaded the data before **October 10, 2020**, please re-download the code and data for the corrected version. Please note that **this bug did not affect any results in the accompanying article**. The bug was introduced, and then fixed, after the article was submitted for publication. 
 
 # DNA-methylation-maintenance-kinetics
 
